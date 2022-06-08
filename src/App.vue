@@ -4,9 +4,17 @@
     <router-link :to="{ name: 'Products'}">Products</router-link> |
     <router-link :to="{ name: 'about' }">About</router-link>
   </nav>
+  
   <router-view/>
 </template>
 
+<script>
+
+
+export default {
+  
+}
+</script>
 <style >
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -14,8 +22,7 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin: 0 auto;
-  padding: 0;
+  
 }
 
 nav {

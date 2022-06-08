@@ -1,17 +1,11 @@
 <template>
     <h1>Products</h1>
-   
-    <nav>
-        <button @click="categories = all">All</button>
-        <button @click="categories = 'smartphone' " onclick="javascript:alert('smartphones ');" >Smartphones</button>
-        <button @click="categories = 'laptops'" onclick="javascript:alert('laptops ');">Laptops</button>
-        <button @click="categories = 'fragnances'" onclick="javascript:alert('fragnances ');">Fragrances</button>
-        <button @click="categories = 'skincare'" onclick="javascript:alert('skincare ');">Skincare</button>
-        <button >More</button>
-    </nav>
+        
+        
+        <input id="search-box" type="text" v-model="search" placeholder="search for products">
         <div v-if="products.length">
             
-                <div v-for="product in products" :key="product.id"      class="product">
+                <div v-for="product in filteredProducts" :key="product.id"   class="product">
                     <router-link :to="{ name: 'ProductDetails', params:{ id: product.id }}">
                         <div class="product-thumbnail">
                             
@@ -39,20 +33,10 @@ export default {
     data(){
         return{
             products:[],
-            
-            categories: null,
-            
-            laptops: false,
-            fragrances: false,
-            skincare: false
-
+            search: ""
         }
     },
-    methods:{
-        productsToShow(cat){
-            return this.products.filter(p => this.products.category === cat)
-        }
-    },
+    
     mounted(){
         fetch('http://localhost:3000/products')
         
@@ -61,6 +45,13 @@ export default {
         .then(data => this.products = data)
         .catch(err => console.log(err.message))
     },
+    computed:{
+        filteredProducts: function(){
+            return this.products.filter((product) =>{
+                return product.title.toLowerCase().match(this.search.toLowerCase())
+            });
+        }
+    }
     
 }
 
@@ -125,5 +116,9 @@ nav button{
 nav button:hover{
  background: #42b983;
 }
-
+#search-box{
+   width: 300px; 
+   height: 30px;
+   
+}
 </style>
